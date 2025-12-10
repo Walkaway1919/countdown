@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обратный отсчет до 18 марта</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #FFB6D9 0%, #FFC5E5 25%, #FFE5F1 50%, #FFB6E8 75%, #FF8FD8 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: float 15s infinite;
+            box-shadow: 0 0 10px rgba(255, 182, 217, 0.8);
+        }
+
+        .sparkle {
+            position: absolute;
+            font-size: 30px;
+            animation: float 12s infinite;
+        }
+
+        .kitty {
+            position: absolute;
+            font-size: 50px;
+            animation: float 20s infinite, rotate 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rotate {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .container {
+            text-align: center;
+            color: #FF1493;
+            z-index: 10;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            box-shadow: 0 8px 32px 0 rgba(255, 20, 147, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.8);
+            animation: fadeIn 1s ease-in-out, borderGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% {
+                box-shadow: 0 8px 32px 0 rgba(255, 20, 147, 0.3),
+                            0 0 20px rgba(255, 182, 217, 0.5);
+            }
+            50% {
+                box-shadow: 0 8px 32px 0 rgba(255, 20, 147, 0.5),
+                            0 0 40px rgba(255, 182, 217, 0.8);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(255, 105, 180, 0.4);
+            animation: pulse 2s ease-in-out infinite, rainbow 3s ease-in-out infinite;
+            background: linear-gradient(45deg, #FF1493, #FF69B4, #FFB6D9, #FF1493);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: slideUp 0.8s ease-out backwards, bounce 2s ease-in-out infinite;
+        }
+
+        .time-unit:nth-child(1) { animation-delay: 0.1s, 0s; }
+        .time-unit:nth-child(2) { animation-delay: 0.2s, 0.2s; }
+        .time-unit:nth-child(3) { animation-delay: 0.3s, 0.4s; }
+        .time-unit:nth-child(4) { animation-delay: 0.4s, 0.6s; }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .number {
+            font-size: 4.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FF1493, #FF69B4, #FFB6D9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
+            min-width: 130px;
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 25px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3),
+                        inset 0 0 20px rgba(255, 255, 255, 0.5);
+            border: 3px solid #FFB6D9;
+        }
+
+        .number:hover {
+            transform: scale(1.15) rotate(8deg);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.5),
+                        inset 0 0 30px rgba(255, 255, 255, 0.7);
+        }
+
+        .label {
+            font-size: 1.3em;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            color: #FF1493;
+            text-shadow: 1px 1px 3px rgba(255, 182, 217, 0.5);
+        }
+
+        .date-display {
+            margin-top: 30px;
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #FF1493;
+            text-shadow: 2px 2px 4px rgba(255, 182, 217, 0.5);
+        }
+
+        .decorative-kitties {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .corner-kitty {
+            position: absolute;
+            font-size: 80px;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        .corner-kitty.top-left {
+            top: 20px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+
+        .corner-kitty.top-right {
+            top: 20px;
+            right: 20px;
+            animation-delay: 0.5s;
+        }
+
+        .corner-kitty.bottom-left {
+            bottom: 20px;
+            left: 20px;
+            animation-delay: 1s;
+        }
+
+        .corner-kitty.bottom-right {
+            bottom: 20px;
+            right: 20px;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.1); }
+            50% { transform: rotate(-5deg) scale(1); }
+            75% { transform: rotate(5deg) scale(1.1); }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .number {
+                font-size: 3.5em;
+                min-width: 100px;
+                padding: 20px;
+            }
+
+            .label {
+                font-size: 1em;
+            }
+
+            .countdown {
+                gap: 15px;
+            }
+
+            .corner-kitty {
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="decorative-kitties">
+        <div class="corner-kitty top-left">🐱</div>
+        <div class="corner-kitty top-right">😻</div>
+        <div class="corner-kitty bottom-left">😺</div>
+        <div class="corner-kitty bottom-right">🐈</div>
+    </div>
+
+    <div class="container">
+        <h1>💖 Обратный отсчет 💖</h1>
+        <div class="date-display">✨ до 18 марта 2026 ✨</div>
+
+        <div class="countdown">
+            <div class="time-unit">
+                <div class="number" id="days">0</div>
+                <div class="label">💕 Дней 💕</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="hours">0</div>
+                <div class="label">🌸 Часов 🌸</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="minutes">0</div>
+                <div class="label">🦄 Минут 🦄</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="seconds">0</div>
+                <div class="label">🎀 Секунд 🎀</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Создание частиц, котиков и блесток
+        const particlesContainer = document.getElementById('particles');
+        const emojis = ['✨', '💖', '💕', '🌸', '🦄', '🎀', '💝', '🌺', '🐱', '😻', '🐈', '😺', '🌟', '⭐', '💗'];
+
+        for (let i = 0; i < 80; i++) {
+            const isEmoji = Math.random() > 0.4;
+            const element = document.createElement('div');
+
+            if (isEmoji) {
+                element.className = Math.random() > 0.6 ? 'kitty' : 'sparkle';
+                element.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            } else {
+                element.className = 'particle';
+            }
+
+            element.style.left = Math.random() * 100 + '%';
+            element.style.animationDelay = Math.random() * 15 + 's';
+            element.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(element);
+        }
+
+        // Обратный отсчет
+        function updateCountdown() {
+            const targetDate = new Date('March 18, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            } else {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                document.querySelector('h1').textContent = '🎉 Время пришло!';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
