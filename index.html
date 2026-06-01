@@ -1,447 +1,432 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обратный отсчет встречи с пупсиком</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Обратный отсчет</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700;900&family=UnifrakturMaguntia&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: 'Quicksand', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #FFB6D9 0%, #FFC5E5 25%, #FFE5F1 50%, #FFB6E8 75%, #FF8FD8 100%);
-            overflow: hidden;
-            position: relative;
-        }
+      body {
+        font-family: "Cinzel", serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        background-color: #0a0505;
+      }
 
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
+      .bosch-bg {
+        position: fixed;
+        inset: 0;
+        background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/The_Garden_of_earthly_delights.jpg/1920px-The_Garden_of_earthly_delights.jpg");
+        background-size: cover;
+        background-position: center 30%;
+        filter: saturate(0.7) brightness(0.45) sepia(0.3);
+        z-index: 0;
+      }
 
-        .particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-            animation: float 15s infinite;
-            box-shadow: 0 0 10px rgba(255, 182, 217, 0.8);
-        }
+      .bosch-overlay {
+        position: fixed;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.1) 0%,
+          rgba(10, 3, 3, 0.7) 100%
+        );
+        z-index: 1;
+      }
 
-        .sparkle {
-            position: absolute;
-            font-size: 30px;
-            animation: float 12s infinite;
-        }
+      /* Floating dark creatures */
+      .creatures {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
 
-        .kitty {
-            position: absolute;
-            font-size: 50px;
-            animation: float 20s infinite, rotate 5s ease-in-out infinite;
-        }
+      .creature {
+        position: absolute;
+        font-size: 2em;
+        opacity: 0;
+        animation: drift 20s infinite;
+        filter: drop-shadow(0 0 6px rgba(200, 80, 0, 0.7));
+      }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
+      @keyframes drift {
+        0% {
+          opacity: 0;
+          transform: translateY(110vh) translateX(0) rotate(0deg);
         }
-
-        @keyframes rotate {
-            0%, 100% { transform: rotate(-10deg); }
-            50% { transform: rotate(10deg); }
+        10% {
+          opacity: 0.7;
         }
+        90% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-10vh) translateX(80px) rotate(30deg);
+        }
+      }
 
+      .container {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 50px 60px;
+        background: rgba(5, 2, 2, 0.72);
+        backdrop-filter: blur(6px);
+        border-radius: 4px;
+        border: 1px solid rgba(160, 80, 20, 0.6);
+        box-shadow:
+          0 0 60px rgba(180, 60, 0, 0.3),
+          inset 0 0 40px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(80, 30, 0, 0.8);
+        animation: flicker 8s ease-in-out infinite;
+        max-width: 800px;
+        width: 90vw;
+      }
+
+      @keyframes flicker {
+        0%,
+        100% {
+          box-shadow:
+            0 0 60px rgba(180, 60, 0, 0.3),
+            inset 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+        45% {
+          box-shadow:
+            0 0 80px rgba(200, 80, 0, 0.5),
+            inset 0 0 50px rgba(0, 0, 0, 0.3);
+        }
+        50% {
+          box-shadow:
+            0 0 40px rgba(150, 40, 0, 0.2),
+            inset 0 0 30px rgba(0, 0, 0, 0.7);
+        }
+        55% {
+          box-shadow:
+            0 0 80px rgba(200, 80, 0, 0.5),
+            inset 0 0 50px rgba(0, 0, 0, 0.3);
+        }
+      }
+
+      /* Decorative border corners */
+      .container::before,
+      .container::after {
+        content: "✦";
+        position: absolute;
+        color: rgba(200, 100, 20, 0.7);
+        font-size: 1.5em;
+      }
+      .container::before {
+        top: 12px;
+        left: 18px;
+      }
+      .container::after {
+        bottom: 12px;
+        right: 18px;
+      }
+
+      h1 {
+        font-family: "UnifrakturMaguntia", cursive;
+        font-size: 3.2em;
+        margin-bottom: 10px;
+        color: #d4882a;
+        text-shadow:
+          0 0 20px rgba(220, 120, 0, 0.8),
+          0 0 60px rgba(200, 80, 0, 0.4),
+          2px 2px 0px #1a0800;
+        letter-spacing: 2px;
+        animation: glow 3s ease-in-out infinite;
+      }
+
+      @keyframes glow {
+        0%,
+        100% {
+          text-shadow:
+            0 0 20px rgba(220, 120, 0, 0.8),
+            0 0 60px rgba(200, 80, 0, 0.4),
+            2px 2px 0px #1a0800;
+        }
+        50% {
+          text-shadow:
+            0 0 30px rgba(255, 160, 40, 1),
+            0 0 80px rgba(220, 80, 0, 0.7),
+            2px 2px 0px #1a0800;
+        }
+      }
+
+      .subtitle {
+        font-size: 0.85em;
+        color: rgba(180, 120, 60, 0.8);
+        letter-spacing: 6px;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .divider {
+        width: 80%;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(180, 80, 10, 0.8),
+          transparent
+        );
+        margin: 18px auto;
+      }
+
+      .date-display {
+        margin-bottom: 8px;
+        font-size: 1.15em;
+        font-weight: 700;
+        color: #b87030;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(200, 100, 0, 0.5);
+      }
+
+      .countdown {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 35px;
+        flex-wrap: wrap;
+      }
+
+      .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .number {
+        font-family: "Cinzel", serif;
+        font-size: 4.2em;
+        font-weight: 900;
+        color: #e8a040;
+        min-width: 120px;
+        padding: 22px 16px;
+        background: rgba(10, 3, 0, 0.8);
+        border: 1px solid rgba(160, 70, 10, 0.5);
+        border-radius: 2px;
+        text-shadow:
+          0 0 15px rgba(230, 140, 30, 0.9),
+          0 0 40px rgba(200, 80, 0, 0.5);
+        box-shadow:
+          inset 0 0 20px rgba(0, 0, 0, 0.6),
+          0 0 15px rgba(150, 60, 0, 0.2);
+        transition: transform 0.3s ease;
+        position: relative;
+      }
+
+      .number::before,
+      .number::after {
+        content: "";
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border: 1px solid rgba(180, 80, 10, 0.7);
+      }
+      .number::before {
+        top: 5px;
+        left: 5px;
+        border-right: none;
+        border-bottom: none;
+      }
+      .number::after {
+        bottom: 5px;
+        right: 5px;
+        border-left: none;
+        border-top: none;
+      }
+
+      .number:hover {
+        transform: scale(1.06);
+        text-shadow:
+          0 0 25px rgba(255, 160, 40, 1),
+          0 0 60px rgba(220, 80, 0, 0.7);
+      }
+
+      .label {
+        font-size: 0.75em;
+        margin-top: 12px;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+        font-weight: 700;
+        color: rgba(160, 90, 30, 0.9);
+      }
+
+      #finished-msg {
+        display: none;
+        font-family: "UnifrakturMaguntia", cursive;
+        font-size: 2.8em;
+        color: #e8a040;
+        text-shadow:
+          0 0 30px rgba(255, 140, 0, 1),
+          0 0 80px rgba(200, 80, 0, 0.8);
+        animation: glow 1.5s ease-in-out infinite;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 768px) {
         .container {
-            text-align: center;
-            color: #FF1493;
-            z-index: 10;
-            padding: 50px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            box-shadow: 0 8px 32px 0 rgba(255, 20, 147, 0.3);
-            border: 4px solid rgba(255, 255, 255, 0.8);
-            animation: fadeIn 1s ease-in-out, borderGlow 2s ease-in-out infinite;
+          padding: 30px 20px;
         }
-
-        @keyframes borderGlow {
-            0%, 100% {
-                box-shadow: 0 8px 32px 0 rgba(255, 20, 147, 0.3),
-                            0 0 20px rgba(255, 182, 217, 0.5);
-            }
-            50% {
-                box-shadow: 0 8px 32px 0 rgba(255, 20, 147, 0.5),
-                            0 0 40px rgba(255, 182, 217, 0.8);
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
         h1 {
-            font-family: 'Pacifico', cursive;
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            text-shadow: 3px 3px 6px rgba(255, 105, 180, 0.4);
-            animation: pulse 2s ease-in-out infinite, rainbow 3s ease-in-out infinite;
-            background: linear-gradient(45deg, #FF1493, #FF69B4, #FFB6D9, #FF1493);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+          font-size: 2.2em;
         }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.08);
-            }
-        }
-
-        @keyframes rainbow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-
-        .time-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: slideUp 0.8s ease-out backwards, bounce 2s ease-in-out infinite;
-        }
-
-        .time-unit:nth-child(1) { animation-delay: 0.1s, 0s; }
-        .time-unit:nth-child(2) { animation-delay: 0.2s, 0.2s; }
-        .time-unit:nth-child(3) { animation-delay: 0.3s, 0.4s; }
-        .time-unit:nth-child(4) { animation-delay: 0.4s, 0.6s; }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
         .number {
-            font-size: 4.5em;
-            font-weight: bold;
-            background: linear-gradient(135deg, #FF1493, #FF69B4, #FFB6D9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 30px rgba(255, 105, 180, 0.5);
-            min-width: 130px;
-            padding: 25px;
-            background-color: rgba(255, 255, 255, 0.6);
-            border-radius: 25px;
-            backdrop-filter: blur(5px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.3),
-                        inset 0 0 20px rgba(255, 255, 255, 0.5);
-            border: 3px solid #FFB6D9;
+          font-size: 2.8em;
+          min-width: 75px;
+          padding: 16px 10px;
         }
-
-        .number:hover {
-            transform: scale(1.15) rotate(8deg);
-            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.5),
-                        inset 0 0 30px rgba(255, 255, 255, 0.7);
-        }
-
         .label {
-            font-size: 1.3em;
-            margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: 700;
-            color: #FF1493;
-            text-shadow: 1px 1px 3px rgba(255, 182, 217, 0.5);
+          font-size: 0.65em;
+          letter-spacing: 2px;
         }
-
+        .countdown {
+          gap: 12px;
+        }
         .date-display {
-            margin-top: 30px;
-            font-size: 1.8em;
-            font-weight: 700;
-            color: #FF1493;
-            text-shadow: 2px 2px 4px rgba(255, 182, 217, 0.5);
+          font-size: 0.95em;
         }
+      }
 
-        .decorative-kitties {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
+      @media (max-width: 430px) {
+        h1 {
+          font-size: 1.8em;
         }
-
-        .corner-kitty {
-            position: absolute;
-            font-size: 80px;
-            animation: wiggle 3s ease-in-out infinite;
+        .number {
+          font-size: 2em;
+          min-width: 60px;
+          padding: 12px 8px;
         }
-
-        .corner-kitty.top-left {
-            top: 20px;
-            left: 20px;
-            animation-delay: 0s;
+        .label {
+          font-size: 0.6em;
         }
-
-        .corner-kitty.top-right {
-            top: 20px;
-            right: 20px;
-            animation-delay: 0.5s;
+        .countdown {
+          gap: 8px;
         }
-
-        .corner-kitty.bottom-left {
-            bottom: 20px;
-            left: 20px;
-            animation-delay: 1s;
-        }
-
-        .corner-kitty.bottom-right {
-            bottom: 20px;
-            right: 20px;
-            animation-delay: 1.5s;
-        }
-
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-5deg) scale(1); }
-            25% { transform: rotate(5deg) scale(1.1); }
-            50% { transform: rotate(-5deg) scale(1); }
-            75% { transform: rotate(5deg) scale(1.1); }
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 20px;
-            }
-
-            .container {
-                padding: 30px 20px;
-                border-radius: 30px;
-                max-width: 100%;
-            }
-
-            h1 {
-                font-size: 2em;
-                margin-bottom: 15px;
-            }
-
-            .date-display {
-                font-size: 1.2em;
-                margin-top: 20px;
-            }
-
-            .countdown {
-                gap: 15px;
-                margin-top: 30px;
-            }
-
-            .number {
-                font-size: 2.5em;
-                min-width: 70px;
-                padding: 15px 10px;
-            }
-
-            .label {
-                font-size: 0.8em;
-                letter-spacing: 1px;
-                margin-top: 8px;
-            }
-
-            .corner-kitty {
-                font-size: 40px;
-            }
-
-            .corner-kitty.top-left,
-            .corner-kitty.top-right {
-                top: 10px;
-            }
-
-            .corner-kitty.bottom-left,
-            .corner-kitty.bottom-right {
-                bottom: 10px;
-            }
-
-            .corner-kitty.top-left,
-            .corner-kitty.bottom-left {
-                left: 10px;
-            }
-
-            .corner-kitty.top-right,
-            .corner-kitty.bottom-right {
-                right: 10px;
-            }
-        }
-
-        /* iPhone Pro и узкие экраны */
-        @media (max-width: 430px) {
-            .container {
-                padding: 25px 15px;
-            }
-
-            h1 {
-                font-size: 1.8em;
-            }
-
-            .date-display {
-                font-size: 1em;
-            }
-
-            .countdown {
-                gap: 10px;
-            }
-
-            .number {
-                font-size: 2em;
-                min-width: 60px;
-                padding: 12px 8px;
-                border: 2px solid #FFB6D9;
-            }
-
-            .label {
-                font-size: 0.7em;
-            }
-
-            .sparkle,
-            .kitty {
-                font-size: 25px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-    <div class="particles" id="particles"></div>
-    <div class="decorative-kitties">
-        <div class="corner-kitty top-left">🐱</div>
-        <div class="corner-kitty top-right">😻</div>
-        <div class="corner-kitty bottom-left">😺</div>
-        <div class="corner-kitty bottom-right">🐈</div>
-    </div>
+  </head>
+  <body>
+    <div class="bosch-bg"></div>
+    <div class="bosch-overlay"></div>
+
+    <div class="creatures" id="creatures"></div>
 
     <div class="container">
-        <h1>💖 Обратный отсчет 💖</h1>
-        <div class="date-display">✨ до 18 марта 2026 ✨</div>
+      <div class="subtitle">✦ &nbsp; Тайное исчисление &nbsp; ✦</div>
+      <h1>эта ебанина закончится через</h1>
+      <div class="divider"></div>
 
-        <div class="countdown">
-            <div class="time-unit">
-                <div class="number" id="days">0</div>
-                <div class="label">💕 Дней 💕</div>
-            </div>
-            <div class="time-unit">
-                <div class="number" id="hours">0</div>
-                <div class="label">🌸 Часов 🌸</div>
-            </div>
-            <div class="time-unit">
-                <div class="number" id="minutes">0</div>
-                <div class="label">🦄 Минут 🦄</div>
-            </div>
-            <div class="time-unit">
-                <div class="number" id="seconds">0</div>
-                <div class="label">🎀 Секунд 🎀</div>
-            </div>
+      <div class="countdown" id="countdown-wrap">
+        <div class="time-unit">
+          <div class="number" id="days">00</div>
+          <div class="label">Дней</div>
         </div>
+        <div class="time-unit">
+          <div class="number" id="hours">00</div>
+          <div class="label">Часов</div>
+        </div>
+        <div class="time-unit">
+          <div class="number" id="minutes">00</div>
+          <div class="label">Минут</div>
+        </div>
+        <div class="time-unit">
+          <div class="number" id="seconds">00</div>
+          <div class="label">Секунд</div>
+        </div>
+      </div>
+
+      <div class="divider" style="margin-top: 28px;"></div>
+      <div class="date-display">V · Июня · MMXXVI · XIX:00</div>
+
+      <div id="finished-msg">⚗ Час настал ⚗</div>
     </div>
 
     <script>
-        // Создание частиц, котиков и блесток
-        const particlesContainer = document.getElementById('particles');
-        const emojis = ['✨', '💖', '💕', '🌸', '🦄', '🎀', '💝', '🌺', '🐱', '😻', '🐈', '😺', '🌟', '⭐', '💗'];
+      // Floating dark emoji creatures from Bosch-like imagery
+      const creaturesContainer = document.getElementById("creatures");
+      const symbols = [
+        "🦇",
+        "🐍",
+        "🦎",
+        "🕷",
+        "🦂",
+        "🐸",
+        "🔮",
+        "⚗️",
+        "💀",
+        "🕯",
+        "🌑",
+        "🦅",
+        "🌿",
+        "🍄",
+      ];
 
-        for (let i = 0; i < 80; i++) {
-            const isEmoji = Math.random() > 0.4;
-            const element = document.createElement('div');
+      for (let i = 0; i < 30; i++) {
+        const el = document.createElement("div");
+        el.className = "creature";
+        el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        el.style.left = Math.random() * 100 + "%";
+        el.style.animationDelay = Math.random() * 20 + "s";
+        el.style.animationDuration = Math.random() * 12 + 14 + "s";
+        el.style.fontSize = 1.2 + Math.random() * 1.8 + "em";
+        creaturesContainer.appendChild(el);
+      }
 
-            if (isEmoji) {
-                element.className = Math.random() > 0.6 ? 'kitty' : 'sparkle';
-                element.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-            } else {
-                element.className = 'particle';
-            }
+      // Countdown to June 5, 2026, 19:00
+      function updateCountdown() {
+        const targetDate = new Date("2026-06-05T19:00:00").getTime();
+        const now = new Date().getTime();
+        const diff = targetDate - now;
 
-            element.style.left = Math.random() * 100 + '%';
-            element.style.animationDelay = Math.random() * 15 + 's';
-            element.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            particlesContainer.appendChild(element);
+        if (diff > 0) {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor(
+            (diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+          );
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+          document.getElementById("days").textContent = String(days).padStart(
+            2,
+            "0",
+          );
+          document.getElementById("hours").textContent = String(hours).padStart(
+            2,
+            "0",
+          );
+          document.getElementById("minutes").textContent = String(
+            minutes,
+          ).padStart(2, "0");
+          document.getElementById("seconds").textContent = String(
+            seconds,
+          ).padStart(2, "0");
+        } else {
+          document.getElementById("countdown-wrap").style.display = "none";
+          document.getElementById("finished-msg").style.display = "block";
         }
+      }
 
-        // Обратный отсчет
-        function updateCountdown() {
-            const targetDate = new Date('March 18, 2026 09:10:00').getTime();
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-
-            if (difference > 0) {
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-                document.getElementById('days').textContent = days.toString().padStart(2, '0');
-                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            } else {
-                document.getElementById('days').textContent = '00';
-                document.getElementById('hours').textContent = '00';
-                document.getElementById('minutes').textContent = '00';
-                document.getElementById('seconds').textContent = '00';
-                document.querySelector('h1').textContent = '🎉 Время пришло!';
-            }
-        }
-
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
     </script>
-</body>
+  </body>
 </html>
